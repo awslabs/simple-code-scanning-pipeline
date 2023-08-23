@@ -1,0 +1,19 @@
+*.js
+!jest.config.js
+*.d.ts
+node_modules
+
+# Just the root package lock
+package-lock.json
+
+# CDK asset staging directory
+.cdk.staging
+cdk.out
+
+# Big terraform files
+.terraform
+
+# Python
+__pycache__/
+
+**/initial_scsp_repo*.zip

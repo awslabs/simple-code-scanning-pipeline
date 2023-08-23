@@ -1,0 +1,12 @@
+{
+    "Version": "1.0",
+    "Parameters": {
+        "RuleName": "Config_APIGateway_Access_Logging",
+        "SourceRuntime": "python3.9",
+        "CodeKey": "config-apigateway-access-logging.zip",
+        "InputParameters": "{}",
+        "OptionalParameters": "{}",
+        "SourceEvents": "AWS::ApiGateway::Stage"
+    },
+    "Tags": "[]"
+}

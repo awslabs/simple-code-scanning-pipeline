@@ -1,0 +1,1 @@
+select *, cost from mytable limit 10

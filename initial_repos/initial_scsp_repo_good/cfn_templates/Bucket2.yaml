@@ -1,0 +1,65 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: >-
+    AWS CloudFormation Sample Template S3 Bucket: Create an Amazon S3 Bucket.
+    **WARNING** This template creates an Amazon S3 Bucket. You will be billed
+    for the AWS resources used if you create a stack from this template. Copy
+    provided to test multi-CFT output.
+Resources:
+    MyBucket:
+        Type: 'AWS::S3::Bucket'
+        Metadata:
+            cdk_nag:
+                rules_to_suppress:
+                    - id: AwsSolutions-S1
+                      reason:
+                          Since this is an isolated example bucket, there is no defined location where access logs could be stored. In real environments, access logs should be sent to a dedicated access log bucket.
+                    - id: AwsSolutions-S10
+                      reason:
+                          Bucket policy blocks insecure transport, but CDK Nag
+                          is too strict to see it.
+            cfn_nag:
+                rules_to_suppress:
+                    - id: W35
+                      reason:
+                          Since this is an isolated example bucket, there is no defined location where access logs could be stored. In real environments, access logs should be sent to a dedicated access log bucket.
+        Properties:
+            PublicAccessBlockConfiguration:
+                BlockPublicAcls: true
+                BlockPublicPolicy: true
+                IgnorePublicAcls: true
+                RestrictPublicBuckets: true
+            BucketEncryption:
+                ServerSideEncryptionConfiguration:
+                    - ServerSideEncryptionByDefault:
+                          SSEAlgorithm: AES256
+            VersioningConfiguration:
+                Status: Enabled
+
+    MyBucketPolicy:
+        Type: 'AWS::S3::BucketPolicy'
+        Metadata:
+            cdk_nag:
+                rules_to_suppress:
+                    - id: AwsSolutions-S10
+                      reason:
+                          Bucket policy blocks insecure transport, but CDK Nag
+                          is too strict to see it.
+        Properties:
+            Bucket: !Ref MyBucket
+            PolicyDocument:
+                Statement:
+                    - Action: s3:*
+                      Condition:
+                          Bool:
+                              aws:SecureTransport: false
+                      Effect: Deny
+                      Principal:
+                          AWS: '*'
+                      Resource: !Sub 'arn:${AWS::Partition}:s3:::${MyBucket}/*'
+                      Sid: AllowSSLRequestsOnly
+
+Outputs:
+    InstanceId:
+        Description: Name of the newly S3 Bucket Name
+        Value:
+            Ref: MyBucket
