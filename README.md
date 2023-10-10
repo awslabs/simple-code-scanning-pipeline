@@ -117,7 +117,7 @@ you will have:
     -   cfn_nag for CloudFormation template linting and security checks
     -   Checkov for Terraform linting
     -   Gitleaks for secret detection
-    -   Shellcheck for Shell script linting
+    -   ~~Shellcheck for Shell script linting~~ (removed due to licensing issues)
     -   SqlFluff for SQL linting
     -   Unit testing of RDK Custom Config rules
 
